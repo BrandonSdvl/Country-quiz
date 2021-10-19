@@ -1,11 +1,13 @@
-import Answer from "../Answer/Answer"
+import Answer from "../Answer/Answer";
 
-const Answers = () => {
-    return (
-        <div className={'quiz__answers'}>
-            <Answer />
-        </div>
-    )
-}
+const Answers = ({ answers }) => {
+  return (
+    <div className={"quiz__answers"}>
+      {answers.map((el, index) => {
+        return <Answer data={el} key={index} />;
+      })}
+    </div>
+  );
+};
 
-export default Answers
+export default Answers;
