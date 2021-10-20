@@ -3,9 +3,16 @@ import { ReactComponent as Correct } from "../../assets/correct.svg";
 import { ReactComponent as Incorrect } from "../../assets/incorrect.svg";
 import StatusContext from "../../context/StatusContext";
 
-const Answer = ({ data, id, setSelected, selected }) => {
-  const { setScore, score, answered, setAnswered, setCorrect } =
-    useContext(StatusContext);
+const Answer = ({ data, id }) => {
+  const {
+    setScore,
+    score,
+    answered,
+    setAnswered,
+    setCorrect,
+    setSelected,
+    selected,
+  } = useContext(StatusContext);
 
   const handleClick = () => {
     setSelected(id);
@@ -14,7 +21,6 @@ const Answer = ({ data, id, setSelected, selected }) => {
       setAnswered(true);
       setCorrect(true);
     } else {
-      setScore(0);
       setAnswered(true);
       setCorrect(false);
     }

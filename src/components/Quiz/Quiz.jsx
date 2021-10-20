@@ -4,6 +4,7 @@ import { ReactComponent as Logo } from "../../assets/undraw_adventure_4hum 1.svg
 import { useContext, useEffect, useState } from "react";
 import { getRandomInt } from "../../utils/getRandomInt";
 import StatusContext from "../../context/StatusContext";
+import Results from "../Resutls/Results";
 
 const initialQuestion = {
   type: "",
@@ -14,8 +15,16 @@ const Quiz = () => {
   const [data, setData] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [question, setQuestion] = useState(initialQuestion);
-  const { answered, setAnswered, loading, setLoading } =
-    useContext(StatusContext);
+  const {
+    answered,
+    setAnswered,
+    setLoading,
+    correct,
+    setCorrect,
+    continueGame,
+    setContinueGame,
+    setSelected,
+  } = useContext(StatusContext);
 
   useEffect(() => {
     setLoading(true);
@@ -40,58 +49,69 @@ const Quiz = () => {
 
   const generateQuestion = () => {
     setLoading(true);
-    let questionCopy = question;
-    questionCopy.type = getRandomInt(1, 3);
-    if (questionCopy.type === 1) {
-      questionCopy.question = "Which country does this flag belong to?";
-    } else if (questionCopy.type === 2) {
-      questionCopy.question = `is the capital of`;
+    let newQuestion = {};
+    newQuestion.type = getRandomInt(1, 3);
+    if (newQuestion.type === 1) {
+      newQuestion.question = "Which country does this flag belong to?";
+    } else if (newQuestion.type === 2) {
+      newQuestion.question = `is the capital of`;
     }
-    setQuestion(questionCopy);
+    setQuestion(newQuestion);
     generateAnswers();
   };
 
   const generateAnswers = () => {
     let correct = getRandomInt(1, 5);
-    let answersCopy = [];
+    let newAnswers = [];
     let random = 0;
 
     for (let i = 1; i <= 4; i++) {
       random = getRandomInt(0, data.length);
       if (i === correct) {
-        answersCopy.push({
+        newAnswers.push({
           name: data[random].name.common,
           capital: data[random].capital[0],
           flag: data[random].flags.svg,
           correct: i === correct,
         });
       } else {
-        answersCopy.push({
+        newAnswers.push({
           name: data[random].name.common,
           correct: i === correct,
         });
       }
     }
 
-    setAnswers(answersCopy);
+    setAnswers(newAnswers);
     setLoading(false);
   };
 
-  const handleClick = () => {
-    setAnswered(!answered);
-    console.log(answered);
+  const handleNext = () => {
+    if (correct) {
+      setAnswered(false);
+      setCorrect(null);
+      setSelected(null);
+      generateQuestion();
+    } else {
+      setContinueGame(false);
+    }
   };
 
   return (
     <div className={"quiz"}>
-      <Logo />
-      <Question
-        question={question}
-        answer={answers.filter((answer) => answer.correct)}
-      />
-      <Answers answers={answers} />
-      {answered && <button onClick={handleClick}>Next</button>}
-      {loading && <p>Loading</p>}
+      {continueGame ? (
+        <>
+          <Logo />
+          <Question
+            question={question}
+            answer={answers.filter((answer) => answer.correct)}
+          />
+          <Answers answers={answers} />
+          {answered && <button onClick={handleNext}>Next</button>}
+        </>
+      ) : (
+        <Results generateQuestion={generateQuestion} />
+      )}
     </div>
   );
 };
