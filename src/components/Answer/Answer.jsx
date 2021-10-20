@@ -1,12 +1,32 @@
+import { useContext } from "react";
 import { ReactComponent as Correct } from "../../assets/correct.svg";
 import { ReactComponent as Incorrect } from "../../assets/incorrect.svg";
+import StatusContext from "../../context/StatusContext";
 
-const Answer = ({ data }) => {
+const Answer = ({ data, id, setSelected, selected }) => {
+  const { setScore, score, answered, setAnswered, setCorrect } =
+    useContext(StatusContext);
+
+  const handleClick = () => {
+    setSelected(id);
+    if (data.correct) {
+      setScore(score + 1);
+      setAnswered(true);
+      setCorrect(true);
+    } else {
+      setScore(0);
+      setAnswered(true);
+      setCorrect(false);
+    }
+  };
   return (
     <div className="quiz__answer">
-      <button>{data.name}</button>
-      <Correct />
-      <Incorrect />
+      <button onClick={handleClick}>{data.name}</button>
+      {answered && data.correct ? (
+        <Correct />
+      ) : (
+        selected === id && <Incorrect />
+      )}
     </div>
   );
 };
