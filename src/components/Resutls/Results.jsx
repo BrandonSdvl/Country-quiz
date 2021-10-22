@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { ReactComponent as Logo } from "../../assets/undraw_winners_ao2o 2.svg";
+import { ReactComponent as Icon } from "../../assets/undraw_winners_ao2o 2.svg";
 import StatusContext from "../../context/StatusContext";
+import "./Results.scss";
 
 const Results = ({ generateQuestion }) => {
   const { score, reset } = useContext(StatusContext);
@@ -11,12 +12,15 @@ const Results = ({ generateQuestion }) => {
   };
   return (
     <div className={"results"}>
-      <Logo />
-      <h2>Results</h2>
-      <p>
-        You got <span>{score}</span> correct answers
+      <Icon className={"results__icon"} />
+      <h2 className={"results__title"}>Results</h2>
+      <p className={"results__text"}>
+        You got <span className={"results__score"}>{score}</span> correct
+        answers
       </p>
-      <button onClick={handleClick}>Try Again</button>
+      <button onClick={handleClick} className={"results__button"}>
+        Try Again
+      </button>
     </div>
   );
 };

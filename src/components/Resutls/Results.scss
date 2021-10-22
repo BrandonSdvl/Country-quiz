@@ -1,0 +1,44 @@
+@import '../../sass/colors';
+
+.results {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: $dark-blue;
+
+    &__icon {
+        width: 80%;
+    }
+
+    &__title {
+        font-size: 40px;
+        font-weight: 700;
+        margin: 30px 0 0 0;
+    }
+
+    &__text {
+        font-size: 18px;
+        font-weight: 400;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    &__score {
+        color: $green-background;
+        font-size: 30px;
+        font-weight: 700;
+    }
+
+    &__button {
+        border: none;
+        color: $dark-blue;
+        font-family: Poppins;
+        font-size: 18px;
+        font-weight: 600;
+        background-color: transparent;
+        border: 2px solid $dark-blue;
+        border-radius: 12px;
+        padding: 15px 50px;
+    }
+}
