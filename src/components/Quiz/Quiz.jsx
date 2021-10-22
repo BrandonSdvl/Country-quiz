@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from "react";
 import { getRandomInt } from "../../utils/getRandomInt";
 import StatusContext from "../../context/StatusContext";
 import Results from "../Resutls/Results";
+import Loader from "../Loader/Loader";
 
 const initialQuestion = {
   type: "",
@@ -18,6 +19,7 @@ const Quiz = () => {
   const {
     answered,
     setAnswered,
+    loading,
     setLoading,
     correct,
     setCorrect,
@@ -99,6 +101,7 @@ const Quiz = () => {
 
   return (
     <main className={"quiz"}>
+      {loading && <Loader />}
       {continueGame ? (
         <>
           <Question
