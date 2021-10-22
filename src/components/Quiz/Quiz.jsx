@@ -1,6 +1,6 @@
+import "./Quiz.scss";
 import Answers from "../Answers/Answers";
 import Question from "../Question/Question";
-import { ReactComponent as Logo } from "../../assets/undraw_adventure_4hum 1.svg";
 import { useContext, useEffect, useState } from "react";
 import { getRandomInt } from "../../utils/getRandomInt";
 import StatusContext from "../../context/StatusContext";
@@ -98,21 +98,24 @@ const Quiz = () => {
   };
 
   return (
-    <div className={"quiz"}>
+    <main className={"quiz"}>
       {continueGame ? (
         <>
-          <Logo />
           <Question
             question={question}
             answer={answers.filter((answer) => answer.correct)}
           />
           <Answers answers={answers} />
-          {answered && <button onClick={handleNext}>Next</button>}
+          {answered && (
+            <button className={"quiz__button"} onClick={handleNext}>
+              Next
+            </button>
+          )}
         </>
       ) : (
         <Results generateQuestion={generateQuestion} />
       )}
-    </div>
+    </main>
   );
 };
 

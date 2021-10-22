@@ -1,0 +1,50 @@
+@import '../../sass/colors';
+
+.answer {
+    width: 100%;
+    margin: 20px 0;
+    border-radius: 12px;
+    padding: 10px 15px;
+    color: $light-blue;
+    border: 2px solid $light-blue;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__letter {
+        font-size: 20px;
+        margin-right: 20px;
+    }
+
+    &__name {
+        font-size: 15px;
+    }
+
+    &__icon {
+        fill: $white;
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &--correct {
+        background-color: $green-background;
+        color: $white;
+        border: none;
+
+        &:hover {
+            background-color: $green-background;
+        }
+    }
+
+    &--incorrect {
+        background-color: $red-background;
+        color: $white;
+        border: none;
+
+        &:hover {
+            background-color: $red-background;
+        }
+    }
+}

@@ -1,0 +1,24 @@
+@import '../../sass/colors';
+
+.quiz {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    border-radius: 24px;
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+
+    &__button {
+        background-color: $yellow-background;
+        border: none;
+        color: $white;
+        font-weight: 700;
+        font-size: 13px;
+        padding: 10px 30px;
+        border-radius: 12px;
+        width: 90px;
+        align-self: flex-end;
+    }
+}
