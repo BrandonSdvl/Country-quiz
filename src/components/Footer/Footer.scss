@@ -1,0 +1,23 @@
+.footer {
+    color: #f2f2f2;
+    font-size: 10px;
+    font-weight: 500;
+    margin-right: auto;
+    margin-left: auto;
+    text-align: center;
+    align-self: flex-end;
+    justify-self: end;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+
+    a {
+        text-decoration: none;
+        color: #f2f2f2;
+    }
+
+    &__username {
+        font-weight: 700;
+    }
+}
