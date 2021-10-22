@@ -1,4 +1,5 @@
 @import '../../sass/colors';
+@import '../../sass/breakpoints';
 
 .answer {
     width: 100%;
@@ -10,41 +11,61 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: background-color .2s ease-in;
+    transition: color .2s ease;
+
+    @include laptop {
+        margin: 25px 0;
+        padding: 10px 19px;
+
+        &--active:hover {
+            background-color: $yellow-background;
+            color: $white;
+            border: 2px solid transparent;
+        }
+    }
+
+    &--active {
+        cursor: pointer;
+    }
+
+    &__container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 
     &__letter {
         font-size: 20px;
         margin-right: 20px;
+
+        @include laptop {
+            font-size: 24px;
+            margin-right: 46px;
+        }
     }
 
     &__name {
         font-size: 15px;
+
+        @include laptop {
+            font-size: 18px;
+        }
     }
 
     &__icon {
         fill: $white;
     }
 
-    &:hover {
-        cursor: pointer;
-    }
-
     &--correct {
         background-color: $green-background;
         color: $white;
-        border: none;
-
-        &:hover {
-            background-color: $green-background;
-        }
+        border: 2px solid transparent;
     }
 
     &--incorrect {
         background-color: $red-background;
         color: $white;
-        border: none;
-
-        &:hover {
-            background-color: $red-background;
-        }
+        border: 2px solid transparent;
     }
 }

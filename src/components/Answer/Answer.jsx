@@ -37,10 +37,10 @@ const Answer = ({ data, id, letter }) => {
           : selected === id
           ? "answer--incorrect"
           : ""
-      }`}
+      } ${!answered ? "answer--active" : ""}`}
       onClick={handleClick}
     >
-      <div>
+      <div className={"answer__container"}>
         <span className={"answer__letter"}>{letter}</span>
         <span className={"answer__name"}>{data.name}</span>
       </div>

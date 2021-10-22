@@ -1,20 +1,30 @@
 @import '../../sass/colors';
+@import '../../sass/breakpoints';
 
 .results {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-direction: column;
     color: $dark-blue;
 
     &__icon {
         width: 80%;
+
+        @include laptop {
+            margin-top: 20px;
+        }
     }
 
     &__title {
         font-size: 40px;
         font-weight: 700;
         margin: 30px 0 0 0;
+
+        @include laptop {
+            margin-top: 72px;
+            font-size: 48px;
+        }
     }
 
     &__text {
@@ -22,12 +32,21 @@
         font-weight: 400;
         margin-bottom: 30px;
         text-align: center;
+
+        @include laptop {
+            margin-top: 0;
+            margin-bottom: 72px;
+        }
     }
 
     &__score {
         color: $green-background;
         font-size: 30px;
         font-weight: 700;
+
+        @include laptop {
+            font-size: 36px;
+        }
     }
 
     &__button {
@@ -40,5 +59,16 @@
         border: 2px solid $dark-blue;
         border-radius: 12px;
         padding: 15px 50px;
+        cursor: pointer;
+
+        @include laptop {
+            &:hover {
+                transition: background-color .2s ease-in;
+                transition: color .2s ease-in;
+                background-color: $dark-blue;
+                color: $white;
+                border: 2px solid $dark-blue;
+            }
+        }
     }
 }

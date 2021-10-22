@@ -1,4 +1,5 @@
 @import '../../sass/colors';
+@import '../../sass/breakpoints';
 
 .question {
     height: auto;
@@ -11,10 +12,18 @@
         line-height: 36px;
         margin-top: 20px;
         margin-bottom: 0;
+
+        @include laptop {
+            margin-top: 28px;
+        }
     }
 
     &__image {
         margin-top: 15px;
-        width: 54px;
+        height: 36px;
+
+        @include laptop {
+            height: 54px;
+        }
     }
 }
