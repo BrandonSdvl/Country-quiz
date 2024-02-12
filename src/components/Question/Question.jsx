@@ -5,14 +5,14 @@ const Question = ({ question, answer }) => {
     <div className={"question"}>
       {question.type === 1 && (
         <>
-          <img src={answer[0].flag} alt="flag" className={"question__image"} />
+          <img src={answer.flag} alt="flag" className={"question__image"} />
           <h2 className={"question__text"}>{question.question}</h2>
         </>
       )}
 
       {question.type === 2 && (
         <h2 className={"question__text"}>
-          {answer[0].capital + " "}
+          {answer.capital + " "}
           {question.question}
         </h2>
       )}

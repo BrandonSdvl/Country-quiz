@@ -5,46 +5,37 @@ import { ReactComponent as Incorrect } from "../../assets/incorrect.svg";
 import StatusContext from "../../context/StatusContext";
 
 const Answer = ({ data, id, letter }) => {
-  const {
-    setScore,
-    score,
-    answered,
-    setAnswered,
-    setCorrect,
-    setSelected,
-    selected,
-  } = useContext(StatusContext);
+  const { correct, setScore, setCorrect, setSelected, selected } =
+    useContext(StatusContext);
 
   const handleClick = () => {
-    if (answered) {
+    if (correct !== null) {
       return;
     }
     setSelected(id);
     if (data.correct) {
-      setScore(score + 1);
-      setAnswered(true);
+      setScore((score) => score + 1);
       setCorrect(true);
     } else {
-      setAnswered(true);
       setCorrect(false);
     }
   };
   return (
     <div
       className={`answer ${
-        answered && data.correct
+        correct !== null && data.correct
           ? "answer--correct"
           : selected === id
           ? "answer--incorrect"
           : ""
-      } ${!answered ? "answer--active" : ""}`}
+      } ${correct === null ? "answer--active" : ""}`}
       onClick={handleClick}
     >
       <div className={"answer__container"}>
         <span className={"answer__letter"}>{letter}</span>
         <span className={"answer__name"}>{data.name}</span>
       </div>
-      {answered && data.correct ? (
+      {correct !== null && data.correct ? (
         <Correct className={"answer__icon"} />
       ) : (
         selected === id && <Incorrect className={"answer__icon"} />

@@ -17,80 +17,82 @@ const Quiz = () => {
   const [answers, setAnswers] = useState([]);
   const [question, setQuestion] = useState(initialQuestion);
   const {
-    answered,
-    setAnswered,
-    loading,
-    setLoading,
     correct,
     setCorrect,
+    setSelected,
+    reset,
     continueGame,
     setContinueGame,
-    setSelected,
   } = useContext(StatusContext);
 
   useEffect(() => {
-    setLoading(true);
+    let ignore = false;
+
     let url = "https://restcountries.com/v3.1/all?fields=name,capital,flags";
 
     const getData = async (url) => {
       let res = await fetch(url),
         json = await res.json();
 
-      setData(json);
+      if (!ignore) {
+        setData(json);
+      }
     };
 
     getData(url);
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   useEffect(() => {
     if (data.length !== 0) {
-      setLoading(false);
       generateQuestion();
     }
   }, [data]);
 
   const generateQuestion = () => {
-    setLoading(true);
-    let newQuestion = {};
-    newQuestion.type = getRandomInt(1, 3);
-    if (newQuestion.type === 1) {
-      newQuestion.question = "Which country does this flag belong to?";
-    } else if (newQuestion.type === 2) {
-      newQuestion.question = `is the capital of`;
-    }
+    setQuestion(initialQuestion);
+    setAnswers([]);
+
+    const type = getRandomInt(1, 3);
+    const newQuestion = {
+      type,
+      question:
+        type === 1
+          ? "Which country does this flag belong to?"
+          : "is the capital of",
+    };
+
     setQuestion(newQuestion);
     generateAnswers();
   };
 
   const generateAnswers = () => {
-    let correct = getRandomInt(1, 5);
+    let correctIndex = getRandomInt(1, 5);
     let newAnswers = [];
-    let random = 0;
 
     for (let i = 1; i <= 4; i++) {
-      random = getRandomInt(0, data.length);
-      if (i === correct) {
-        newAnswers.push({
-          name: data[random].name.common,
-          capital: data[random].capital[0],
-          flag: data[random].flags.svg,
-          correct: i === correct,
-        });
-      } else {
-        newAnswers.push({
-          name: data[random].name.common,
-          correct: i === correct,
-        });
+      const randomIndex = getRandomInt(0, data.length);
+
+      const answer = {
+        name: data[randomIndex].name.common,
+        correct: i === correctIndex,
+      };
+
+      if (i === correctIndex) {
+        answer.capital = data[randomIndex].capital[0];
+        answer.flag = data[randomIndex].flags.svg;
       }
+      newAnswers.push(answer);
     }
 
     setAnswers(newAnswers);
-    setLoading(false);
   };
 
   const handleNext = () => {
     if (correct) {
-      setAnswered(false);
       setCorrect(null);
       setSelected(null);
       generateQuestion();
@@ -99,24 +101,30 @@ const Quiz = () => {
     }
   };
 
+  const handleTryAgain = () => {
+    reset();
+    setContinueGame(true);
+    generateQuestion();
+  };
+
   return (
     <main className={"quiz"}>
-      {loading && <Loader />}
+      {(data.length === 0 || answers.length === 0) && <Loader />}
       {continueGame ? (
         <>
           <Question
             question={question}
-            answer={answers.filter((answer) => answer.correct)}
+            answer={answers.find((answer) => answer.correct)}
           />
           <Answers answers={answers} />
-          {answered && (
+          {correct !== null && (
             <button className={"quiz__button"} onClick={handleNext}>
               Next
             </button>
           )}
         </>
       ) : (
-        <Results generateQuestion={generateQuestion} />
+        <Results handleTryAgain={handleTryAgain} />
       )}
     </main>
   );
